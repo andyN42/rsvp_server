@@ -24,7 +24,7 @@ public class GuestController {
 
     @RequestMapping("/guest")
     public GuestDto getPersonDetail(@RequestParam(value = "id", required = false,
-            defaultValue = "0") Integer id) {
+            defaultValue = "0") String id) {
 
 
         return guestService.find(id);
