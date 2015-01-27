@@ -18,14 +18,15 @@ public class GuestService  extends Database{
 
     public GuestDto find(String id) {
 
-        System.out.println("GUestService");
+        System.out.println("GuestService finding " + id);
         List<GuestDto> results = getJdbcTemplate().query(
                 "select * from guest where id= ?", new Object[]{id},
                 new RowMapper<GuestDto>() {
                     @Override
                     public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
-                                rs.getString("lastName"));
+                                rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
+                                , rs.getString("notes"), rs.getLong("mealId"), rs.getLong("plusOneId"), rs.getLong("statusId"), rs.getString("association"));
                     }
                 });
 
@@ -37,9 +38,32 @@ public class GuestService  extends Database{
     }
 
     public void save(GuestDto guest) {
+        int res = getJdbcTemplate().update(
+                "INSERT INTO guest (firstName,lastName, phoneNumber, address, notes, mealId ) values(?,?,?,?,?,?,?,?,?)",
+                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), guest.getPlusOneId(), guest.getStatusId(), guest.getAssociation());
+
+        System.out.println("result:" + res);
+
+
     }
 
-    public void update(GuestDto guest) {
 
+    public List<GuestDto> findAll() {
+        List<GuestDto> results = getJdbcTemplate().query(
+                "select * from guest",
+                new RowMapper<GuestDto>() {
+                    @Override
+                    public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
+                                rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
+                                , rs.getString("notes"), rs.getLong("mealId"), rs.getLong("plusOneId"), rs.getLong("statusId"), rs.getString("association"));
+                    }
+                });
+
+        for (GuestDto customer : results) {
+            System.out.println(customer);
+        }
+
+        return results;
     }
 }

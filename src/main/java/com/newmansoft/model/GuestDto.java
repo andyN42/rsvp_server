@@ -14,7 +14,46 @@ public class GuestDto {
     private String phoneNumber;
     private String address;
     private String notes;
+    private Long   mealId;
+    private Long statusId;
+    private Long plusOneId;
+    private String association;
 
+    public String getAssociation() {
+        return association;
+    }
+
+    public void setAssociation(String association) {
+        this.association = association;
+    }
+
+    public GuestDto() {
+
+    }
+
+    public Long getMealId() {
+        return mealId;
+    }
+
+    public void setMealId(Long mealId) {
+        this.mealId = mealId;
+    }
+
+    public Long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
+    }
+
+    public Long getPlusOneId() {
+        return plusOneId;
+    }
+
+    public void setPlusOneId(Long plusOneId) {
+        this.plusOneId = plusOneId;
+    }
 
     public GuestDto( Long id, String firstName, String lastName) {
         this.firstName = firstName;
@@ -22,12 +61,19 @@ public class GuestDto {
         this.id = id;
     }
 
-
-    //    @Column(nullable = false)
-    private PlusOne plusOne;
-    //    @Column(nullable = false)
-    private MealChoice mealChoice;
-    private Status status;
+    public GuestDto(Long id, String firstName, String lastName,  String phoneNumber,
+                    String address, String notes, Long mealId, Long statusId, Long plusOneId, String association) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.notes = notes;
+        this.mealId = mealId;
+        this.statusId = statusId;
+        this.plusOneId = plusOneId;
+        this.association = association;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -53,21 +99,7 @@ public class GuestDto {
         this.notes = notes;
     }
 
-    public MealChoice getMealChoice() {
-        return mealChoice;
-    }
 
-    public void setMealChoice(MealChoice mealChoice) {
-        this.mealChoice = mealChoice;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     public Long getId() {
         return id;
@@ -77,13 +109,7 @@ public class GuestDto {
         this.id = id;
     }
 
-    public PlusOne getPlusOne() {
-        return plusOne;
-    }
 
-    public void setPlusOne(PlusOne plusOne) {
-        this.plusOne = plusOne;
-    }
 
     public String getFirstName() {
         return firstName;
