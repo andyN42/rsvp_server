@@ -1,6 +1,8 @@
 package com.newmansoft.service;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ public class Database {
 
     private SimpleDriverDataSource dataSource;
     private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert insert;
 
     public SimpleDriverDataSource getDataSource() {
         return dataSource;
@@ -21,6 +24,9 @@ public class Database {
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
+    }
+    public  SimpleJdbcInsert getJdbcInsert(String tableName) {
+        return new SimpleJdbcInsert(dataSource).withTableName(tableName);
     }
 
     public  Database() {
@@ -31,6 +37,7 @@ public class Database {
         dataSource.setPassword("root");
 
         jdbcTemplate = new JdbcTemplate(dataSource);
+
     }
 
 
