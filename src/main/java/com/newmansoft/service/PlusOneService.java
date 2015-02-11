@@ -17,4 +17,15 @@ import java.util.List;
 public class PlusOneService extends Database{
 
 
+    public int save(PlusOne plusOneInfo, Long id) {
+        int res = getJdbcTemplate().update(
+                "INSERT INTO plusone (guestID, name, mealId ) values(?,?,?)",
+                id, plusOneInfo.getName(), plusOneInfo.getMealChoiceId());
+
+
+
+        System.out.println("result:" + res);
+       return res;
+
+    }
 }

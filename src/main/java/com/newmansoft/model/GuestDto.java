@@ -16,8 +16,27 @@ public class GuestDto {
     private String notes;
     private Long   mealId;
     private Long statusId;
-    private Long plusOneId;
     private String association;
+
+    private String email;
+
+    private PlusOne plusOneInfo;
+
+    public PlusOne getPlusOneInfo() {
+        return plusOneInfo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPlusOneInfo(PlusOne plusOneInfo) {
+        this.plusOneInfo = plusOneInfo;
+    }
 
     public String getAssociation() {
         return association;
@@ -47,13 +66,6 @@ public class GuestDto {
         this.statusId = statusId;
     }
 
-    public Long getPlusOneId() {
-        return plusOneId;
-    }
-
-    public void setPlusOneId(Long plusOneId) {
-        this.plusOneId = plusOneId;
-    }
 
     public GuestDto( Long id, String firstName, String lastName) {
         this.firstName = firstName;
@@ -62,7 +74,7 @@ public class GuestDto {
     }
 
     public GuestDto(Long id, String firstName, String lastName,  String phoneNumber,
-                    String address, String notes, Long mealId, Long statusId, Long plusOneId, String association) {
+                    String address, String notes, Long mealId, Long statusId, String association) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -71,7 +83,6 @@ public class GuestDto {
         this.notes = notes;
         this.mealId = mealId;
         this.statusId = statusId;
-        this.plusOneId = plusOneId;
         this.association = association;
     }
 

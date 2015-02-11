@@ -4,6 +4,7 @@ package com.newmansoft.controller;
 import com.newmansoft.model.GuestDto;
 
 import com.newmansoft.service.GuestService;
+import com.newmansoft.service.PlusOneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,8 @@ public class GuestController {
 
     @Autowired
     private GuestService guestService;
-
+    @Autowired
+    private PlusOneService plusOneService;
     public GuestController() {
 
     }
@@ -36,7 +38,12 @@ public class GuestController {
     public ResponseEntity<GuestDto > createGuest(@RequestBody GuestDto guestDto) {
 
         System.out.println("Create Guest!");
-        guestService.save(guestDto);
+        GuestDto updatedGuest = guestService.save(guestDto);
+
+        if (updatedGuest.getPlusOneInfo() != null) {
+            plusOneService.save(updatedGuest.getPlusOneInfo(), updatedGuest.getId());
+
+        }
         return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
     }
 }
