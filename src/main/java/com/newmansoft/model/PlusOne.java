@@ -21,6 +21,12 @@ public class PlusOne {
     public PlusOne() {
     }
 
+    public PlusOne(long id,String name, int mealChoiceId) {
+        this.name = name;
+        this.mealChoiceId = mealChoiceId;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

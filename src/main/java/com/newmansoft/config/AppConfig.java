@@ -22,8 +22,9 @@ public class AppConfig {
 
     @Bean
     public Filter corsFilter() {
-                new ShallowEtagHeaderFilter();
         return new CORSFilter();
     }
+
+
 }
 

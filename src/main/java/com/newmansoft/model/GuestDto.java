@@ -74,7 +74,7 @@ public class GuestDto {
     }
 
     public GuestDto(Long id, String firstName, String lastName,  String phoneNumber,
-                    String address, String notes, Long mealId, Long statusId, String association) {
+                    String address, String notes, Long mealId, Long statusId, String association, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,6 +84,7 @@ public class GuestDto {
         this.mealId = mealId;
         this.statusId = statusId;
         this.association = association;
+        this.email = email;
     }
 
     public String getPhoneNumber() {

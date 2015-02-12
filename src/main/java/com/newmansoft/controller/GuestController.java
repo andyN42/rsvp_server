@@ -3,6 +3,7 @@ package com.newmansoft.controller;
 
 import com.newmansoft.model.GuestDto;
 
+import com.newmansoft.model.PlusOne;
 import com.newmansoft.service.GuestService;
 import com.newmansoft.service.PlusOneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class GuestController {
     public ResponseEntity<GuestDto> getGuest(@PathVariable String id) {
         GuestDto guestDto = guestService.find(id);
         if (guestDto != null) {
+
+            PlusOne plusOne = plusOneService.findPlusOneForGuestId(id);
+            if (plusOne != null) {
+                guestDto.setPlusOneInfo(plusOne);
+            }
 
             return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
         }

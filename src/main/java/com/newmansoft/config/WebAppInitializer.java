@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import com.newmansoft.filter.CORSFilter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.web.WebApplicationInitializer;
@@ -19,6 +20,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dynamic.addMapping("/");
         dynamic.setLoadOnStartup(1);
 
+//        System.out.println("adding webapp filter");
+//        servletContext.addFilter("corsFilter", CORSFilter.class);
 
 
 //

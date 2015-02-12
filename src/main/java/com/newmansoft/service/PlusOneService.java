@@ -1,5 +1,6 @@
 package com.newmansoft.service;
 
+import com.newmansoft.model.GuestDto;
 import com.newmansoft.model.MealChoice;
 import com.newmansoft.model.PlusOne;
 import org.springframework.jdbc.core.RowMapper;
@@ -52,5 +53,32 @@ public class PlusOneService extends Database {
         }
 
         return key.intValue();
+    }
+
+
+
+    public PlusOne findPlusOneForGuestId(String guestId) {
+        // //  "select guest.*   , plusone.* from guest, plusone where plusone.guestID = guest.id",
+        System.out.println("PlusOneService finding for guest " + guestId);
+        List<PlusOne> results = getJdbcTemplate().query(
+                "select * from plusone where guestId= ?", new Object[]{guestId},
+                new RowMapper<PlusOne>() {
+                    @Override
+                    public PlusOne mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        return new PlusOne(rs.getLong("id"), rs.getString("name"),
+                                rs.getInt("mealId"));
+                    }
+                });
+
+        for (PlusOne plusOne : results) {
+            System.out.println(plusOne);
+        }
+
+        if (results != null && results.size()>0) {
+
+            return results.get(0);
+        }
+        return null;
+
     }
 }
