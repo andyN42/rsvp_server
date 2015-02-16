@@ -40,6 +40,20 @@ public class GuestController {
         return new ResponseEntity<GuestDto>(HttpStatus.NOT_FOUND);
 
     }
+
+    @RequestMapping(value = "/{id}", method=RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity<GuestDto> update(@PathVariable String id,  @RequestBody GuestDto guestDto) {
+        System.out.println("UPDATING GUEST");
+
+        int result = guestService.updateGuest(guestDto, id);
+        if (guestDto.getPlusOneInfo() != null) {
+            plusOneService.updatePlusOne(guestDto.getPlusOneInfo(), id);
+        }
+
+        System.out.println("Result: " + result);
+        return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
+
+    }
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<GuestDto > createGuest(@RequestBody GuestDto guestDto) {
 

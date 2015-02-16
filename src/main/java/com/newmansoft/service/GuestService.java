@@ -81,18 +81,33 @@ public class GuestService  extends Database{
 
     }
 
+
+    public int updateGuest(GuestDto guest, String id ) {
+
+        System.out.println("UPDATING GUEST");
+        int update = getJdbcTemplate().update(
+                "update guest set " +
+                        "firstName = ? ," +
+                        "lastName = ? ," +
+                        "phoneNumber = ? ," +
+                        "address = ? ," +
+                        "notes= ? ," +
+                        "mealId = ? ," +
+                        "plusOneId = ? ," +
+                        "statusId = ? ," +
+                        "email = ? ," +
+                        "association = ? " +
+                        "where id = ?",
+                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), guest.getPlusOneInfo().getId(), guest.getStatusId()
+                ,guest.getEmail(), guest.getAssociation(), id);
+        return update;
+    }
     public int updatePlusOne(long guestId, long plusOneId ) {
         int update = getJdbcTemplate().update(
                 "update guest set plusOneId = ? where id = ?",
                 plusOneId, guestId);
         return update;
     }
-//
-
-
-    //  "select guest.*   , plusone.* from guest, plusone where plusone.guestID = guest.id",
-
-
 
     public List<GuestDto> findAll() {
         List<GuestDto> results = getJdbcTemplate().query(
@@ -113,7 +128,7 @@ public class GuestService  extends Database{
                     public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
                                 rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
-                                , rs.getString("notes"), rs.getLong("mealId"), rs.getLong("statusId"), rs.getString("association"));
+                                , rs.getString("notes"), rs.getLong("mealId"), rs.getLong("statusId"), rs.getString("association"), rs.getString("email"));
                     }
                 });
 

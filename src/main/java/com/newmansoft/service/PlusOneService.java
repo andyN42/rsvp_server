@@ -54,7 +54,18 @@ public class PlusOneService extends Database {
 
         return key.intValue();
     }
+    public int updatePlusOne(PlusOne plusOne, String guestId) {
 
+        System.out.println("UPDATING PlusOne");
+        int update = getJdbcTemplate().update(
+                "update plusone set " +
+                        "name = ? ," +
+                        "mealId= ? ," +
+                        "guestId = ?" +
+                        " where id= ? "
+                ,plusOne.getName(), plusOne.getMealChoiceId(), guestId, plusOne.getId());
+        return update;
+    }
 
 
     public PlusOne findPlusOneForGuestId(String guestId) {
