@@ -1,6 +1,7 @@
 package com.newmansoft.service;
 
 import com.newmansoft.model.GuestDto;
+import com.newmansoft.model.rowmapper.GuestRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -26,14 +27,7 @@ public class GuestService  extends Database{
         System.out.println("GuestService finding " + id);
         List<GuestDto> results = getJdbcTemplate().query(
                 "select * from guest where id= ?", new Object[]{id},
-                new RowMapper<GuestDto>() {
-                    @Override
-                    public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
-                                rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
-                                , rs.getString("notes"), rs.getLong("mealId"),  rs.getLong("statusId"), rs.getString("association"), rs.getString("email"));
-                    }
-                });
+                new GuestRowMapper());
 
         for (GuestDto customer : results) {
             System.out.println(customer);
@@ -44,6 +38,20 @@ public class GuestService  extends Database{
             return results.get(0);
         }
         return null;
+    }
+
+    public List<GuestDto> findAll() {
+        List<GuestDto> results = getJdbcTemplate().query(
+                "select guest.* from guest",
+                new GuestRowMapper());
+
+        for (GuestDto customer : results) {
+            System.out.println(customer);
+
+
+        }
+
+        return results;
     }
 
     public GuestDto save(GuestDto guest) {
@@ -109,33 +117,4 @@ public class GuestService  extends Database{
         return update;
     }
 
-    public List<GuestDto> findAll() {
-        List<GuestDto> results = getJdbcTemplate().query(
-                "select guest.* from guest",
-                new RowMapper<GuestDto>() {
-                    /*
-                      this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.notes = notes;
-        this.mealId = mealId;
-        this.statusId = statusId;
-        this.association = association;
-                     */
-                    @Override
-                    public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
-                                rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
-                                , rs.getString("notes"), rs.getLong("mealId"), rs.getLong("statusId"), rs.getString("association"), rs.getString("email"));
-                    }
-                });
-
-        for (GuestDto customer : results) {
-            System.out.println(customer);
-        }
-
-        return results;
-    }
 }

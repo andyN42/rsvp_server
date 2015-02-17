@@ -7,23 +7,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema rsvp
--- -----------------------------------------------------
+
 
 -- -----------------------------------------------------
--- Schema rsvp
+-- Table `chloeellis_0_db`.`guest`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `rsvp` DEFAULT CHARACTER SET utf8 ;
-USE `rsvp` ;
-
--- -----------------------------------------------------
--- Table `rsvp`.`guest`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`guest` (
+CREATE TABLE IF NOT EXISTS `chloeellis_0_db`.`guest` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(90) NULL DEFAULT NULL,
   `lastName` VARCHAR(90) NULL DEFAULT NULL,
@@ -42,9 +31,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`meal`
+-- Table `chloeellis_0_db`.`meal`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`meal` (
+CREATE TABLE IF NOT EXISTS `chloeellis_0_db`.`meal` (
   `id` INT(11) NOT NULL DEFAULT '0',
   `name` VARCHAR(90) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
@@ -53,9 +42,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`plusone`
+-- Table `chloeellis_0_db`.`plusone`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`plusone` (
+CREATE TABLE IF NOT EXISTS `chloeellis_0_db`.`plusone` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `guestID` INT(11) NOT NULL,
   `Name` VARCHAR(90) NULL DEFAULT NULL,
@@ -64,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `rsvp`.`plusone` (
   INDEX `guestkey_idx` (`guestID` ASC),
   CONSTRAINT `guestkey`
     FOREIGN KEY (`guestID`)
-    REFERENCES `rsvp`.`guest` (`id`)
+    REFERENCES `chloeellis_0_db`.`guest` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -73,9 +62,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`status`
+-- Table `chloeellis_0_db`.`status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`status` (
+CREATE TABLE IF NOT EXISTS `chloeellis_0_db`.`status` (
   `id` INT(11) NOT NULL,
   `value` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))

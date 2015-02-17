@@ -1,14 +1,13 @@
 package com.newmansoft.controller;
 
 import com.newmansoft.model.GuestDto;
+import com.newmansoft.model.PlusOne;
 import com.newmansoft.service.GuestService;
+import com.newmansoft.service.PlusOneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,9 @@ public class AdminController {
     @Autowired
     private GuestService guestService;
 
+    @Autowired
+    private PlusOneService plusOneService;
+
 
     @RequestMapping(value = "/guestsX", method = RequestMethod.GET, produces= "application/xml")
     public ResponseEntity<List<GuestDto>> getGuests() {
@@ -34,11 +36,22 @@ public class AdminController {
 
     }
     @RequestMapping(value = "/guestsJ", method = RequestMethod.GET, produces= "application/json")
-    public ResponseEntity<List<GuestDto>> getGuestsJSON() {
-        List<GuestDto> guestDto = guestService.findAll();
-        if (guestDto != null) {
+    public ResponseEntity<List<GuestDto>> getGuestsJSON(@RequestHeader(value="Authorization", required = false) String auth) {
+        List<GuestDto> guests = guestService.findAll();
 
-            return new ResponseEntity<List<GuestDto>>(guestDto, HttpStatus.OK);
+        if (!"welc0me".equals(auth)) {
+            return new ResponseEntity<List<GuestDto>>(HttpStatus.UNAUTHORIZED);
+        }
+        if (guests != null) {
+
+            for(GuestDto guest : guests) {
+                PlusOne plusOne = plusOneService.findPlusOneForGuestId(guest.getId().toString());
+                if (plusOne != null) {
+                    guest.setPlusOneInfo(plusOne);
+                }
+
+            }
+            return new ResponseEntity<List<GuestDto>>(guests, HttpStatus.OK);
         }
         return new ResponseEntity<List<GuestDto>>(HttpStatus.NOT_FOUND);
 

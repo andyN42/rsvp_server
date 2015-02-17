@@ -1,6 +1,11 @@
 package com.newmansoft.model;
 
 
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by user on 1/23/2015.
  */
@@ -138,4 +143,6 @@ public class GuestDto {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 }
