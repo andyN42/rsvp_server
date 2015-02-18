@@ -3,6 +3,7 @@ package com.newmansoft.controller;
 import com.newmansoft.model.GuestDto;
 import com.newmansoft.model.MealChoice;
 import com.newmansoft.model.PlusOne;
+import com.newmansoft.model.Status;
 import com.newmansoft.service.GuestService;
 import com.newmansoft.service.MealService;
 import com.newmansoft.service.PlusOneService;
@@ -28,6 +29,18 @@ public class AdminController {
 
     @Autowired
     private MealService mealService;
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces= "application/json")
+    public ResponseEntity<Status> login(@RequestHeader(value="Authorization", required = false) String auth) {
+
+        if (!"welc0me".equals(auth)) {
+            return new ResponseEntity<Status>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<Status>(new Status(200L,"OK"),HttpStatus.OK);
+
+    }
+
 
 
     @RequestMapping(value = "/guests", method = RequestMethod.GET, produces= "application/json")
