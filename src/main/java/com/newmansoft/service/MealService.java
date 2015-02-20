@@ -58,6 +58,14 @@ public class MealService extends Database{
         return update;
     }
 
+    public int delete(String id) {
 
+        System.out.println("Deleting MealChoice");
+        int update = getJdbcTemplate().update(
+                "delete from meal " +
+                        " where id= ? ",
+                id);
+        return update;
+    }
 
 }

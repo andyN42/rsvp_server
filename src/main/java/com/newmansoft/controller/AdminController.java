@@ -120,6 +120,19 @@ public class AdminController {
     }
 
 
+    @RequestMapping(value = "/meal/{id}", method=RequestMethod.DELETE, consumes = "application/json")
+    public ResponseEntity<MealChoice> removeMeal(@PathVariable String id,  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
+
+        if (!"welc0me".equals(auth)) {
+            return new ResponseEntity<MealChoice>(HttpStatus.UNAUTHORIZED);
+        }
+
+        int update = mealService.delete(id);
+        return new ResponseEntity<MealChoice>(mealChoice, HttpStatus.OK);
+
+    }
+
+
     @RequestMapping(value = "/meal/", method=RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<MealChoice> addMeal(  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
 
