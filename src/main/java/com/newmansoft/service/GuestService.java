@@ -110,6 +110,17 @@ public class GuestService  extends Database{
                 ,guest.getEmail(), guest.getAssociation(), id);
         return update;
     }
+
+    public int delete(String id ) {
+
+        System.out.println("Deleting GUEST");
+
+        int update = getJdbcTemplate().update(
+                "delete p, g from  guest g, plusone p where g.id = p.guestId and g.id = ?",
+                id);
+        return update;
+    }
+
     public int updatePlusOne(long guestId, long plusOneId ) {
         int update = getJdbcTemplate().update(
                 "update guest set plusOneId = ? where id = ?",

@@ -1,0 +1,43 @@
+CREATE DATABASE `rsvp` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `guest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(90) DEFAULT NULL,
+  `lastName` varchar(90) DEFAULT NULL,
+  `phoneNumber` varchar(90) DEFAULT NULL,
+  `address` varchar(90) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `mealId` int(11) DEFAULT NULL,
+  `plusOneId` int(11) DEFAULT NULL,
+  `statusId` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `association` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `meal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(90) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `pass_rsvp` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `pass` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `plusone` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guestID` int(11) NOT NULL,
+  `Name` varchar(90) DEFAULT NULL,
+  `mealId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `guestkey_idx` (`guestID`),
+  CONSTRAINT `guestkey` FOREIGN KEY (`guestID`) REFERENCES `guest` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

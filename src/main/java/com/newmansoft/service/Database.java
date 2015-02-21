@@ -32,9 +32,9 @@ public class Database {
     public  Database() {
         dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass(com.mysql.jdbc.Driver.class);
-        dataSource.setUsername("root");
-        dataSource.setUrl("jdbc:mysql://localhost/RSVP");
-        dataSource.setPassword("root");
+        dataSource.setUsername("newmansoft");
+        dataSource.setUrl("jdbc:mysql://db4free.net/newmansoftrsvp");
+        dataSource.setPassword("welc0me");
 
         jdbcTemplate = new JdbcTemplate(dataSource);
 
