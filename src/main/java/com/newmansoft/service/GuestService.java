@@ -93,6 +93,12 @@ public class GuestService  extends Database{
     public int updateGuest(GuestDto guest, String id ) {
 
         System.out.println("UPDATING GUEST");
+
+        Long plusOneId = null;
+
+        if (guest.getPlusOneInfo() != null) {
+            plusOneId = guest.getPlusOneInfo().getId();
+        }
         int update = getJdbcTemplate().update(
                 "update guest set " +
                         "firstName = ? ," +
@@ -106,7 +112,7 @@ public class GuestService  extends Database{
                         "email = ? ," +
                         "association = ? " +
                         "where id = ?",
-                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), guest.getPlusOneInfo().getId(), guest.getStatusId()
+                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), plusOneId, guest.getStatusId()
                 ,guest.getEmail(), guest.getAssociation(), id);
         return update;
     }

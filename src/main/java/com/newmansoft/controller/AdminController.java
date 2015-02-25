@@ -72,8 +72,8 @@ public class AdminController {
     public ResponseEntity<GuestDto> getGuest(@PathVariable String id, @RequestHeader(value="Authorization", required = false) String auth) {
         if (!"welc0me".equals(auth)) {
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
-        }
 
+        }
         GuestDto guestDto = guestService.find(id);
         if (guestDto != null) {
 
