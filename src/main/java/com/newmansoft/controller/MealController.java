@@ -1,12 +1,8 @@
 package com.newmansoft.controller;
 
 
-import com.newmansoft.model.GuestDto;
 import com.newmansoft.model.MealChoice;
-import com.newmansoft.model.PlusOne;
-import com.newmansoft.service.GuestService;
 import com.newmansoft.service.MealService;
-import com.newmansoft.service.PlusOneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -2,11 +2,9 @@ package com.newmansoft.controller;
 
 import com.newmansoft.model.GuestDto;
 import com.newmansoft.model.MealChoice;
-import com.newmansoft.model.PlusOne;
 import com.newmansoft.model.Status;
 import com.newmansoft.service.GuestService;
 import com.newmansoft.service.MealService;
-import com.newmansoft.service.PlusOneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +21,6 @@ public class AdminController {
 
     @Autowired
     private GuestService guestService;
-
-    @Autowired
-    private PlusOneService plusOneService;
 
     @Autowired
     private MealService mealService;
@@ -53,13 +48,6 @@ public class AdminController {
 
         if (guests != null) {
 
-            for(GuestDto guest : guests) {
-                PlusOne plusOne = plusOneService.findPlusOneForGuestId(guest.getId().toString());
-                if (plusOne != null) {
-                    guest.setPlusOneInfo(plusOne);
-                }
-
-            }
             return new ResponseEntity<List<GuestDto>>(guests, HttpStatus.OK);
         }
         return new ResponseEntity<List<GuestDto>>(HttpStatus.NOT_FOUND);
@@ -77,11 +65,6 @@ public class AdminController {
         GuestDto guestDto = guestService.find(id);
         if (guestDto != null) {
 
-            PlusOne plusOne = plusOneService.findPlusOneForGuestId(id);
-            if (plusOne != null) {
-                guestDto.setPlusOneInfo(plusOne);
-            }
-
             return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
         }
         return new ResponseEntity<GuestDto>(HttpStatus.NOT_FOUND);
@@ -97,10 +80,6 @@ public class AdminController {
         System.out.println("UPDATING GUEST");
 
         int result = guestService.updateGuest(guestDto, id);
-        if (guestDto.getPlusOneInfo() != null) {
-            plusOneService.updatePlusOne(guestDto.getPlusOneInfo(), id);
-        }
-
         System.out.println("Result: " + result);
         return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
 

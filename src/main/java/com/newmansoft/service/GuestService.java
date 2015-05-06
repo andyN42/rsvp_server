@@ -63,7 +63,7 @@ public class GuestService  extends Database{
         parameters.put("address", guest.getAddress());
         parameters.put("notes", guest.getNotes());
         parameters.put("mealId", guest.getMealId());
-//        parameters.put("plusOneId", guest.getLastName());
+        parameters.put("partySize", guest.getPartySize());
         parameters.put("statusId", guest.getStatusId());
         parameters.put("email", guest.getEmail());
         parameters.put("association", guest.getAssociation());
@@ -94,11 +94,6 @@ public class GuestService  extends Database{
 
         System.out.println("UPDATING GUEST");
 
-        Long plusOneId = null;
-
-        if (guest.getPlusOneInfo() != null) {
-            plusOneId = guest.getPlusOneInfo().getId();
-        }
         int update = getJdbcTemplate().update(
                 "update guest set " +
                         "firstName = ? ," +
@@ -107,12 +102,12 @@ public class GuestService  extends Database{
                         "address = ? ," +
                         "notes= ? ," +
                         "mealId = ? ," +
-                        "plusOneId = ? ," +
+                        "partySize = ? ," +
                         "statusId = ? ," +
                         "email = ? ," +
                         "association = ? " +
                         "where id = ?",
-                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), plusOneId, guest.getStatusId()
+                guest.getFirstName(), guest.getLastName(), guest.getPhoneNumber(), guest.getAddress(), guest.getNotes(), guest.getMealId(), guest.getPartySize(), guest.getStatusId()
                 ,guest.getEmail(), guest.getAssociation(), id);
         return update;
     }
@@ -122,16 +117,11 @@ public class GuestService  extends Database{
         System.out.println("Deleting GUEST");
 
         int update = getJdbcTemplate().update(
-                "delete p, g from  guest g, plusone p where g.id = p.guestId and g.id = ?",
+                "delete g from  guest g where g.id = ?",
                 id);
         return update;
     }
 
-    public int updatePlusOne(long guestId, long plusOneId ) {
-        int update = getJdbcTemplate().update(
-                "update guest set plusOneId = ? where id = ?",
-                plusOneId, guestId);
-        return update;
-    }
+
 
 }

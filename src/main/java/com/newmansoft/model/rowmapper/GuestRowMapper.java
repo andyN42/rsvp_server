@@ -14,6 +14,6 @@ public class GuestRowMapper implements RowMapper<GuestDto> {
     public GuestDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new GuestDto(rs.getLong("id"), rs.getString("firstName"),
                 rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("address")
-                , rs.getString("notes"), rs.getLong("mealId"),  rs.getLong("statusId"), rs.getString("association"), rs.getString("email"));
+                , rs.getString("notes"), rs.getLong("mealId"),  rs.getLong("statusId"), rs.getString("association"), rs.getString("email"), rs.getString("partySize"));
     }
 }
