@@ -1,0 +1,9 @@
+#
+#   Configuration for RSVP backend
+#   (Project: WC)
+#
+db_password=%password%
+db_username=%username%
+db_url=jdbc:mysql://hostname/database
+admin_password=password123
+

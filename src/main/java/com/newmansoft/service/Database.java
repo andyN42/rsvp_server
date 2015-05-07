@@ -47,10 +47,6 @@ public class Database {
          * 24.84.216.170 (work)
          *
          */
-
-        dataSource.setUsername("mattandj_root2");
-        dataSource.setUrl("jdbc:mysql://mattandjenn2015.ca/mattandj_rsvp");
-
         Properties prop = new Properties();
         try {
             prop.load(this.getClass()
@@ -58,7 +54,13 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String password = prop.getProperty("password");
+        String password = prop.getProperty("db_password");
+        String username = prop.getProperty("db_username");
+        String url = prop.getProperty("db_url");
+
+
+        dataSource.setUsername(username);
+        dataSource.setUrl(url);
         dataSource.setPassword(password);
 
         jdbcTemplate = new JdbcTemplate(dataSource);
