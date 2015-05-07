@@ -17,13 +17,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema rsvp
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `rsvp` DEFAULT CHARACTER SET utf8 ;
-USE `rsvp` ;
+CREATE SCHEMA IF NOT EXISTS `mattandj_rsvp` DEFAULT CHARACTER SET utf8 ;
+USE `mattandj_rsvp` ;
 
 -- -----------------------------------------------------
--- Table `rsvp`.`guest`
+-- Table `mattandj_rsvp`.`guest`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`guest` (
+CREATE TABLE IF NOT EXISTS `mattandj_rsvp`.`guest` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(90) NULL DEFAULT NULL,
   `lastName` VARCHAR(90) NULL DEFAULT NULL,
@@ -42,9 +42,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`meal`
+-- Table `mattandj_rsvp`.`meal`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`meal` (
+CREATE TABLE IF NOT EXISTS `mattandj_rsvp`.`meal` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(90) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
@@ -54,9 +54,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`pass_rsvp`
+-- Table `mattandj_rsvp`.`pass_rsvp`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`pass_rsvp` (
+CREATE TABLE IF NOT EXISTS `mattandj_rsvp`.`pass_rsvp` (
   `id` INT(11) NOT NULL DEFAULT '0',
   `pass` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -65,9 +65,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`plusone`
+-- Table `mattandj_rsvp`.`plusone`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`plusone` (
+CREATE TABLE IF NOT EXISTS `mattandj_rsvp`.`plusone` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `guestID` INT(11) NOT NULL,
   `Name` VARCHAR(90) NULL DEFAULT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `rsvp`.`plusone` (
   INDEX `guestkey_idx` (`guestID` ASC),
   CONSTRAINT `guestkey`
     FOREIGN KEY (`guestID`)
-    REFERENCES `rsvp`.`guest` (`id`)
+    REFERENCES `mattandj_rsvp`.`guest` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -85,9 +85,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `rsvp`.`status`
+-- Table `mattandj_rsvp`.`status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rsvp`.`status` (
+CREATE TABLE IF NOT EXISTS `mattandj_rsvp`.`status` (
   `id` INT(11) NOT NULL,
   `value` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
