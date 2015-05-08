@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -49,8 +50,12 @@ public class Database {
          */
         Properties prop = new Properties();
         try {
-            prop.load(this.getClass()
+            String propLocation;
+            Properties tempProp = new Properties();
+            tempProp.load(this.getClass()
                     .getResourceAsStream("/rsvp.properties"));
+
+            prop.load(new FileInputStream(tempProp.getProperty("properties_file")));
         } catch (IOException e) {
             e.printStackTrace();
         }

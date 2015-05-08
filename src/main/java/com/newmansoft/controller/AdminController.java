@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -33,8 +34,12 @@ public class AdminController {
 
         Properties prop = new Properties();
         try {
-            prop.load(this.getClass()
+            String propLocation;
+            Properties tempProp = new Properties();
+            tempProp.load(this.getClass()
                     .getResourceAsStream("/rsvp.properties"));
+
+            prop.load(new FileInputStream(tempProp.getProperty("properties_file")));
         } catch (IOException e) {
             e.printStackTrace();
         }
