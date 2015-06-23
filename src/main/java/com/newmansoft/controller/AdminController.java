@@ -98,7 +98,7 @@ public class AdminController {
     @RequestMapping(value = "/guests/{id}", method=RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<GuestDto> update(@PathVariable String id,  @RequestBody GuestDto guestDto, @RequestHeader(value="Authorization", required = false) String auth) {
 
-        if (adminPass.equals(auth)) {
+        if (!adminPass.equals(auth)) {
             EmailLogger.log("AdminController.put UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
         }
@@ -114,12 +114,16 @@ public class AdminController {
     public ResponseEntity delete(@PathVariable String id,  @RequestHeader(value="Authorization", required = false) String auth) {
 
 
-        if (adminPass.equals(auth)) {
+        if (!adminPass.equals(auth)) {
             EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
 
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
 
         }
+        if (null == id) {
+            EmailLogger.log("AdminController.delete NULL ID", null, "andyandem2016+server@gmail.com");
+        }
+
         EmailLogger.log("AdminController.delete", id, "andyandem2016+server@gmail.com");
 
 
@@ -127,7 +131,7 @@ public class AdminController {
 
         int result = guestService.delete(id);
         System.out.println("Result: " + result);
-        return new ResponseEntity<GuestDto>(HttpStatus.OK);
+        return new ResponseEntity<GuestDto>(new GuestDto(Long.getLong(id), null,null),HttpStatus.OK);
 
     }
 

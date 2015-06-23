@@ -41,7 +41,7 @@ public class EmailLogger {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmail));
             message.setSubject(name);
-            message.setText(value.toString());
+            message.setText(null != value? value.toString(): "null");
 
             Transport.send(message);
 
