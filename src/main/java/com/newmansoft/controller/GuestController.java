@@ -4,6 +4,7 @@ package com.newmansoft.controller;
 import com.newmansoft.model.GuestDto;
 
 import com.newmansoft.service.GuestService;
+import com.newmansoft.util.EmailLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,28 @@ public class GuestController {
 
     @RequestMapping(value = "/{id}", method=RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<GuestDto> update(@PathVariable String id,  @RequestBody GuestDto guestDto) {
+
+        /**
+         * Before you do any DB work, log it to email
+         */
+        EmailLogger.log("GuestController.update", guestDto, "andyandem2016+server@gmail.com");
+
         int result = guestService.updateGuest(guestDto, id);
+
+
+
+
+
         return new ResponseEntity<GuestDto>(guestDto, HttpStatus.OK);
 
     }
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<GuestDto > createGuest(@RequestBody GuestDto guestDto) {
+
+        /**
+         * Before you do any DB work, log it to email
+         */
+        EmailLogger.log("GuestController.create", guestDto, "andyandem2016+server@gmail.com");
 
         GuestDto updatedGuest = guestService.save(guestDto);
 

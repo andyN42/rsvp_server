@@ -147,4 +147,22 @@ public class GuestDto {
     public void setPartySize(String partySize) {
         this.partySize = partySize;
     }
+
+
+    @Override
+    public String toString() {
+        return "GuestDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", notes='" + notes + '\'' +
+                ", mealId=" + mealId +
+                ", statusId=" + statusId +
+                ", association='" + association + '\'' +
+                ", partySize='" + partySize + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

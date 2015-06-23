@@ -5,6 +5,7 @@ import com.newmansoft.model.MealChoice;
 import com.newmansoft.model.Status;
 import com.newmansoft.service.GuestService;
 import com.newmansoft.service.MealService;
+import com.newmansoft.util.EmailLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,7 @@ public class AdminController {
     public ResponseEntity<Status> login(@RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<Status>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<Status>(new Status(200L,"OK"),HttpStatus.OK);
@@ -62,6 +64,7 @@ public class AdminController {
     public ResponseEntity<List<GuestDto>> getGuestsJSON(@RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<List<GuestDto>>(HttpStatus.UNAUTHORIZED);
         }
         List<GuestDto> guests = guestService.findAll();
@@ -79,6 +82,7 @@ public class AdminController {
     @RequestMapping("/guests/{id}")
     public ResponseEntity<GuestDto> getGuest(@PathVariable String id, @RequestHeader(value="Authorization", required = false) String auth) {
         if (!adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.get UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
 
         }
@@ -95,6 +99,7 @@ public class AdminController {
     public ResponseEntity<GuestDto> update(@PathVariable String id,  @RequestBody GuestDto guestDto, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.put UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
         }
         System.out.println("UPDATING GUEST");
@@ -105,11 +110,32 @@ public class AdminController {
 
     }
 
+    @RequestMapping(value = "/guests/{id}", method=RequestMethod.DELETE, consumes = "application/json")
+    public ResponseEntity delete(@PathVariable String id,  @RequestHeader(value="Authorization", required = false) String auth) {
+
+
+        if (adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+
+            return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
+
+        }
+        EmailLogger.log("AdminController.delete", id, "andyandem2016+server@gmail.com");
+
+
+        System.out.println("DELETING GUEST");
+
+        int result = guestService.delete(id);
+        System.out.println("Result: " + result);
+        return new ResponseEntity<GuestDto>(HttpStatus.OK);
+
+    }
 
     @RequestMapping(value = "/meal/{id}", method=RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<MealChoice> updateMeal(@PathVariable String id,  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.updateMeal UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<MealChoice>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -123,6 +149,7 @@ public class AdminController {
     public ResponseEntity<MealChoice> removeMeal(@PathVariable String id,  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
+            EmailLogger.log("AdminController.DELETE MEAL UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
             return new ResponseEntity<MealChoice>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -130,17 +157,19 @@ public class AdminController {
         return new ResponseEntity<MealChoice>(HttpStatus.OK);
 
     }
-    @RequestMapping(value = "/guests/{id}", method=RequestMethod.DELETE, consumes = "application/json")
-    public ResponseEntity<GuestDto> removeMeal(@PathVariable String id, @RequestHeader(value="Authorization", required = false) String auth) {
-
-        if (!adminPass.equals(auth)) {
-            return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
-        }
-
-        int update = guestService.delete(id);
-        return new ResponseEntity<GuestDto>(HttpStatus.OK);
-
-    }
+//
+//    @RequestMapping(value = "/guests/{id}", method=RequestMethod.DELETE, consumes = "application/json")
+//    public ResponseEntity<GuestDto> removeMeal(@PathVariable String id, @RequestHeader(value="Authorization", required = false) String auth) {
+//
+//        if (!adminPass.equals(auth)) {
+//            EmailLogger.log("AdminController.deleteGuestsUNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+//            return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        int update = guestService.delete(id);
+//        return new ResponseEntity<GuestDto>(HttpStatus.OK);
+//
+//    }
 
     @RequestMapping(value = "/meal/", method=RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<MealChoice> addMeal(  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {

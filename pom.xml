@@ -13,6 +13,9 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.1.1.RELEASE</version>
     </parent>
+
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,6 +52,19 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>javax</groupId>-->
+            <!--<artifactId>javaee-api</artifactId>-->
+            <!--<version>6.0</version>-->
+        <!--</dependency>-->
+
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
@@ -72,6 +88,11 @@
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+        <repository>
+            <id>Java.Net</id>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -131,6 +152,18 @@
             </build>
         </profile>
 
+ 	<profile>
+            <id>skss</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <properties.file>/home/mattandjenn2015/skss.properties</properties.file>
+            </properties>
+            <build>
+                <finalName>skss</finalName>
+            </build>
+        </profile>
 
     </profiles>
 
