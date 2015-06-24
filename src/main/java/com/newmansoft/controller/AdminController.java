@@ -30,7 +30,8 @@ public class AdminController {
     private MealService mealService;
 
     String adminPass = null;
-
+    String serverName = null;
+    String loggingEmail = "andyandem2016+server@gmail.com";
     public AdminController() {
 
         Properties prop = new Properties();
@@ -45,13 +46,21 @@ public class AdminController {
             e.printStackTrace();
         }
         adminPass = prop.getProperty("admin_password");
+        serverName = prop.getProperty("server");
+        String tempLoggingEmail = prop.getProperty("loggingEmail");
+        if (tempLoggingEmail != null) {
+            loggingEmail = tempLoggingEmail;
+        }
+        if (serverName == null) {
+            serverName = "UNKOWN_SERVER ";
+        }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces= "application/json")
     public ResponseEntity<Status> login(@RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.delete UNAUTHORIZED", null,loggingEmail);
             return new ResponseEntity<Status>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<Status>(new Status(200L,"OK"),HttpStatus.OK);
@@ -64,7 +73,7 @@ public class AdminController {
     public ResponseEntity<List<GuestDto>> getGuestsJSON(@RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.delete UNAUTHORIZED", null, loggingEmail);
             return new ResponseEntity<List<GuestDto>>(HttpStatus.UNAUTHORIZED);
         }
         List<GuestDto> guests = guestService.findAll();
@@ -82,7 +91,7 @@ public class AdminController {
     @RequestMapping("/guests/{id}")
     public ResponseEntity<GuestDto> getGuest(@PathVariable String id, @RequestHeader(value="Authorization", required = false) String auth) {
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.get UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.get UNAUTHORIZED", null, loggingEmail);
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
 
         }
@@ -99,7 +108,7 @@ public class AdminController {
     public ResponseEntity<GuestDto> update(@PathVariable String id,  @RequestBody GuestDto guestDto, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.put UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.put UNAUTHORIZED", null, loggingEmail);
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
         }
         System.out.println("UPDATING GUEST");
@@ -115,16 +124,16 @@ public class AdminController {
 
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.delete UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.delete UNAUTHORIZED", null, loggingEmail);
 
             return new ResponseEntity<GuestDto>(HttpStatus.UNAUTHORIZED);
 
         }
         if (null == id) {
-            EmailLogger.log("AdminController.delete NULL ID", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.delete NULL ID", null, loggingEmail);
         }
 
-        EmailLogger.log("AdminController.delete", id, "andyandem2016+server@gmail.com");
+        EmailLogger.log(serverName + " AdminController.delete", id, loggingEmail);
 
 
         System.out.println("DELETING GUEST");
@@ -139,7 +148,7 @@ public class AdminController {
     public ResponseEntity<MealChoice> updateMeal(@PathVariable String id,  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.updateMeal UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.updateMeal UNAUTHORIZED", null, loggingEmail);
             return new ResponseEntity<MealChoice>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -153,7 +162,7 @@ public class AdminController {
     public ResponseEntity<MealChoice> removeMeal(@PathVariable String id,  @RequestBody MealChoice mealChoice, @RequestHeader(value="Authorization", required = false) String auth) {
 
         if (!adminPass.equals(auth)) {
-            EmailLogger.log("AdminController.DELETE MEAL UNAUTHORIZED", null, "andyandem2016+server@gmail.com");
+            EmailLogger.log(serverName + " AdminController.DELETE MEAL UNAUTHORIZED", null, loggingEmail);
             return new ResponseEntity<MealChoice>(HttpStatus.UNAUTHORIZED);
         }
 

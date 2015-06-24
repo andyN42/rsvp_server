@@ -10,17 +10,46 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 @RestController
 @RequestMapping("/guest")
 public class GuestController {
 
 
+    private  String loggingEmail = "andyandem2016+server@gmail.com";
     @Autowired
     private GuestService guestService;
+
+
+
+    String serverName = null;
+
     public GuestController() {
 
-    }
+        Properties prop = new Properties();
+        try {
+            String propLocation;
+            Properties tempProp = new Properties();
+            tempProp.load(this.getClass()
+                    .getResourceAsStream("/rsvp.properties"));
 
+            prop.load(new FileInputStream(tempProp.getProperty("properties_file")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        serverName = prop.getProperty("server");
+        if (serverName == null) {
+            serverName = "UNKOWN_SERVER ";
+        }
+        String tempLoggingEmail = prop.getProperty("loggingEmail");
+        if (tempLoggingEmail != null) {
+            loggingEmail = tempLoggingEmail;
+        }
+    }
     @RequestMapping("/{id}")
     public ResponseEntity<GuestDto> getGuest(@PathVariable String id) {
         GuestDto guestDto = guestService.find(id);
@@ -37,7 +66,7 @@ public class GuestController {
         /**
          * Before you do any DB work, log it to email
          */
-        EmailLogger.log("GuestController.update", guestDto, "andyandem2016+server@gmail.com");
+        EmailLogger.log(serverName + " GuestController.update", guestDto, loggingEmail);
 
         int result = guestService.updateGuest(guestDto, id);
 
@@ -54,7 +83,7 @@ public class GuestController {
         /**
          * Before you do any DB work, log it to email
          */
-        EmailLogger.log("GuestController.create", guestDto, "andyandem2016+server@gmail.com");
+        EmailLogger.log(serverName + " GuestController.create", guestDto, loggingEmail);
 
         GuestDto updatedGuest = guestService.save(guestDto);
 
